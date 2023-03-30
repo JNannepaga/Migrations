@@ -1,0 +1,24 @@
+{
+  "groupId": "94345625-6ee8-4efe-af22-362505c92901",
+  "tenentId": "94345625-6ee8-4efe-af22-362505c92902",
+  "riskProfiles": [
+    {
+      "id": "94345625-6ee8-4efe-af22-362505c92903",
+      "name": "low",
+      "value": 10,
+      "crmStatus": {
+        "id": "94345625-6ee8-4efe-af22-362505c92904",
+        "status": "active"
+      }
+    },
+    {
+      "id": "94345625-6ee8-4efe-af22-362505c92905",
+      "name": "medium",
+      "value": 30,
+      "crmStatus": {
+        "id": "94345625-6ee8-4efe-af22-362505c92906",
+        "status": "active"
+      }
+    }
+  ]
+}
