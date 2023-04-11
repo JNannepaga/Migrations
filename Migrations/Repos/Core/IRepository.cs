@@ -8,7 +8,9 @@ namespace Migrations.Core
 {
     internal interface IRepository
     {
+        public string CollectionName { get; }
+        public IMongoCollection<BsonDocument> Collection { get; }
         List<BsonDocument> GetAllRecords();
-        List<BsonDocument> FindWhen(Expression<Func<BsonDocument, bool>> predicate);
+        List<BsonDocument> FindWhere(Expression<Func<BsonDocument, bool>> predicate);
     }
 }

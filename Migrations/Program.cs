@@ -10,11 +10,7 @@ Console.WriteLine("Migration Tool");
 var build = new ConfigurationBuilder();
 InitBuildConfig(build);
 
-var gldCollection = new GroupLevelDefaultsRepository().GetAllRecords();
-foreach (var item in gldCollection)
-{
-    Console.WriteLine(item.ToJson());
-}
+Tranformer.Run();
 
 static void InitBuildConfig(IConfigurationBuilder configBuilder)
 {
@@ -22,4 +18,7 @@ static void InitBuildConfig(IConfigurationBuilder configBuilder)
         .AddJsonFile(path: "appsettings.json", optional: false, reloadOnChange: true)
         .AddJsonFile(path: $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json")
         .AddEnvironmentVariables();
+    configBuilder.Add
 }
+
+Console.ReadLine();

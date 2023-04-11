@@ -19,12 +19,18 @@ namespace Migrations.Repos
 
         public abstract string CollectionName { get; }
 
-        public List<BsonDocument> GetAllRecords()
-        {
-            return FindWhen(_ => true);
+        public IMongoCollection<BsonDocument> Collection { 
+            get {
+                return _collection;
+            }
         }
 
-        public List<BsonDocument> FindWhen(Expression<Func<BsonDocument, bool>> predicate)
+        public List<BsonDocument> GetAllRecords()
+        {
+            return FindWhere(_ => true);
+        }
+
+        public List<BsonDocument> FindWhere(Expression<Func<BsonDocument, bool>> predicate)
         {
             var filter = Builders<BsonDocument>.Filter.Where(predicate);
             return _collection.Find(filter).ToList();

@@ -1,22 +1,48 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Linq.Expressions;
 
 namespace Migrations.GroupLevelDefaults
 {
     internal class GroupLevelDefaultsActions : IGroupLevelDefaultsActions
     {
-        private Expression<Func<BsonDocument, bool>> filter;
+        private readonly BsonDocument _document;
 
-        public void GetRiskProfile(Guid riskProfileId)
+        public GroupLevelDefaultsActions(BsonDocument groupLevelDefaultsDoc)
         {
-            filter = _ => true;
+            _document = groupLevelDefaultsDoc;
         }
 
-        public BsonDocument updateFieldName(string fieldName, string updatedValue)
+        public void UpdateRiskProfileDetails()
         {
-            return filter.Add();
+            BsonArray riskProfiles = _document["riskProfiles"].AsBsonArray;
+            
+            foreach (var riskProfile in riskProfiles)
+            {
+                Guid newRiskProfile = Guid.NewGuid();
+                Console.WriteLine($"Risk Profile Id {riskProfile["id"]} will be changed to {newRiskProfile}");
+                riskProfile["id"] = newRiskProfile.ToString();
+                UpdateRiskProfileCrmStatus(riskProfile);
+            }
+
+            void UpdateRiskProfileCrmStatus(BsonValue riskProfile)
+            {
+                BsonValue crm = riskProfile["crmStatus"];
+                var newStatus = "locked";
+
+                Console.WriteLine($"crm {crm["status"]} will be changed to {newStatus}");
+                crm["status"] = newStatus;
+            }
         }
 
-        public Expression<Func<BsonDocument, bool>> predicate
+        public BsonDocument Build()
+        {
+            return _document;
+        }
+
+        public class RiskProfile
+        {
+            public Guid Id { get; set; }
+        }
     }
 }
